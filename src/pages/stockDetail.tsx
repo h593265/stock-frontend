@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Chart from '../components/chart';
+import { API_URL } from '../utils/config';
 
 interface StockDetailProps {
   symbol: string;
@@ -37,7 +38,7 @@ function StockDetail({ symbol, onBack, previousPage }: StockDetailProps) {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch(`http://localhost:3000/api/stocks/${symbol}?range=${range}&interval=${interval}`);
+        const response = await fetch(`${API_URL}/api/stocks/${symbol}?range=${range}&interval=${interval}`);
         if (!response.ok) {
           throw new Error('Failed to fetch stock data');
         }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Pager from '../components/pager';
 import { addToWatchlist, isInWatchlist, removeFromWatchlist, getWatchlist } from '../utils/watchlist';
-
+import { API_URL } from '../utils/config';
 interface Stock {
     symbol: string;
     name: string;
@@ -49,7 +49,7 @@ function Stocklistbig({ filters, onSelectStock, searchQuery }: StocklistbigProps
 
                     const stockPromises = symbols.map(async (symbol) => {
                         try {
-                            const response = await fetch(`http://localhost:3000/api/stocks/${symbol}`);
+                            const response = await fetch(`${API_URL}/api/stocks/${symbol}`);
                             if (!response.ok) throw new Error(`Failed to fetch ${symbol}`);
                             const data = await response.json();
                             return {
@@ -70,7 +70,7 @@ function Stocklistbig({ filters, onSelectStock, searchQuery }: StocklistbigProps
                     const validStocks = results.filter(stock => stock !== null) as Stock[];
                     setStocks(validStocks);
                 } else {
-                    const response = await fetch(`http://localhost:3000/api/stocks?category=${filters.category}&asset=${filters.assetType}`);
+                    const response = await fetch(`${API_URL}/api/stocks?category=${filters.category}&asset=${filters.assetType}`);
                     
                     if (!response.ok) {
                         throw new Error('Failed to fetch stocks');
